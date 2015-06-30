@@ -6,8 +6,11 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\News;
+use app\models\Category;
 
 class SiteController extends Controller
 {
@@ -49,7 +52,25 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $categories = Category::find()
+            ->where(['status' => News::STATUS_ACTIVE])
+            ->orderBy('caption')
+            ->all();
+
+        $query = News::find()->where(['status' => News::STATUS_ACTIVE]);
+        $count = $query->count();
+        if( $count > 0) {
+            $pagination = New Pagination( [['totalCount'] => $count] );
+
+            $news = $query->offset($pagination->offset)
+                ->orderBy('date')
+                ->limit($pagination->limit)
+                ->all();
+
+            return $this->render('index',['news' => $news]);
+        }
+
+        return $this->render('index', ['categories' => $categories]);
     }
 
     public function actionLogin()
