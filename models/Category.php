@@ -31,7 +31,7 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['caption', 'description', 'status'], 'required'],
+            [['caption', 'status'], 'required'],
             [['caption', 'description'], 'string'],
             [['status'], 'integer']
         ];

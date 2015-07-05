@@ -8,6 +8,8 @@ use yii\web\NotFoundHttpException;
 
 class NewsController extends Controller
 {
+    const DEFAULT_PAGE_SIZE = 5;
+
     public function actionView($id)
     {
         $post = News::findOne($id);
@@ -17,7 +19,7 @@ class NewsController extends Controller
             ->all();
         if ($post === null) {
             throw new NotFoundHttpException;
-        } elseif($post->status === News::STATUS_INACTIVE) {
+        } elseif ($post->status === News::STATUS_INACTIVE) {
             return $this->redirect(['site/index']);
         }
 

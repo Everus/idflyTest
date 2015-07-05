@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 $this->title = $post->headline;
 ?>
@@ -6,17 +7,20 @@ $this->title = $post->headline;
     <div class="row">
         <div class="col-md-3">
             <nav>
-                <ul class="nav nav-pills nav-stacked" role="complementary">
+                <ul class="nav nav-pills nav-stacked">
                     <?php foreach ($categories as $category): ?>
-                        <li>
-                            <a href=""><?= $category->caption ?></a>
+                        <li
+                            <?php if($category->id === $post->category->id): ?>
+                                class="active"
+                            <?php endif; ?>>
+                            <a href="<?= Url::toRoute(['site/category', 'id' => $category->id]) ?>"><?= $category->caption ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
             </nav>
         </div>
 
-        <div class="col-md-9" role="main">
+        <div class="col-md-9">
             <h2><?= $post->headline ?></h2>
             <?php if(!empty($post->image)): ?>
                 <img src="<?= $post->image ?>">

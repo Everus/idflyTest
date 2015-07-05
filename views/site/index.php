@@ -1,7 +1,12 @@
 <?php
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 /* @var $this yii\web\View */
-$this->title = 'My Yii Application';
+if(isset($cur_category)) {
+    $this->title = 'idfly News app ->'.$cur_category->caption;
+} else {
+    $this->title = 'idfly News app';
+}
 ?>
 <div class="site-index container">
     <div class="row">
@@ -9,8 +14,14 @@ $this->title = 'My Yii Application';
             <nav>
                 <ul class="nav nav-pills nav-stacked" role="complementary">
                     <?php foreach ($categories as $category): ?>
-                        <li>
-                            <a href=""><?= $category->caption ?></a>
+                        <li
+                            <?php if (isset($cur_category))
+                                if ($cur_category->id === $category->id):
+                            ?>
+                                    class="active"
+                            <?php endif;?>
+                            >
+                            <a href="<?= Url::toRoute(['site/category', 'id' => $category->id]) ?>"><?= $category->caption ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -31,6 +42,11 @@ $this->title = 'My Yii Application';
                 </p>
                 <p><a class="btn btn-default" href="<?= Url::toRoute(['news/view', 'id' => $item->id]) ?>">Подробнее &raquo;</a></p>
             <?php endforeach; ?>
+            <?php
+                echo LinkPager::widget([
+                    'pagination' => $pagination,
+                ]);
+            ?>
         </div>
     </div>
 </div>

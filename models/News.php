@@ -80,6 +80,7 @@ class News extends \yii\db\ActiveRecord
         if ($this->validate()) {
             $this->image = 'uploads/news/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs(Yii::getAlias('@webroot').'/'.$this->image);
+            $this->image = Yii::getAlias('@web').'/'.$this->image;
             $this->imageFile = NULL;
             return true;
         } else {
