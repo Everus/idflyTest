@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'caption')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'caption')->textInput() ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 

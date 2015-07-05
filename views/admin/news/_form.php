@@ -18,7 +18,7 @@ use \app\models\Category;
 
     <?= $form->field($model, 'headline')->textInput() ?>
 
-    <?= $form->field($model, 'description')->textInput() ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 4]) ?>
 
     <?= $form->field($model, 'date')->widget(\yii\jui\DatePicker::className(),['dateFormat' => 'yyyy-MM-dd']) ?>
 
