@@ -7,6 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Category */
 
 $this->title = 'Create Category';
+$this->params['breadcrumbs'][] = ['label' => 'Admin Panel', 'url' => ['admin/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

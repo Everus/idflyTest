@@ -7,6 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\News */
 
 $this->title = 'Create News';
+$this->params['breadcrumbs'][] = ['label' => 'Admin Panel', 'url' => ['admin/index']];
 $this->params['breadcrumbs'][] = ['label' => 'News', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
