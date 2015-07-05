@@ -47,11 +47,31 @@ class Category extends \yii\db\ActiveRecord
             'caption' => 'Caption',
             'description' => 'Description',
             'status' => 'Status',
+            'statusText' => 'Status',
         ];
     }
 
     public function getNews()
     {
         return $this->hasMany(News::className(), ['category_id' => 'id'])->inverseOf('category');
+    }
+
+    public function getStatusText()
+    {
+        if($this->status) {
+            return 'ACTIVE';
+        }
+        else {
+            return 'INACTIVE';
+        }
+    }
+
+    public function setStatusText($statusText)
+    {
+        if($statusText === 'ACTIVE') {
+            $this->status = 1;
+        } else {
+            $this->status = 0;
+        }
     }
 }

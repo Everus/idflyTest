@@ -21,6 +21,10 @@ class News extends \yii\db\ActiveRecord
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+
+    /**
+     * @var UploadedFile
+     */
     public $imageFile;
 
     /**
@@ -40,6 +44,8 @@ class News extends \yii\db\ActiveRecord
             [['headline', 'description', 'date', 'content', 'category_id'], 'required'],
             [['headline', 'description', 'content', 'image'], 'string'],
             [['date'], 'safe'],
+            [['date'], 'required'],
+            [['date'], 'date', 'format' => 'yyyy-mm-dd'],
             [['status', 'category_id'], 'integer'],
             [['imageFile'], 'file','skipOnEmpty' => true, 'extensions' => 'png, jpg']
         ];
@@ -58,7 +64,9 @@ class News extends \yii\db\ActiveRecord
             'content' => 'Content',
             'image' => 'Image',
             'status' => 'Status',
-            'category_id' => 'Category ID',
+            'category_id' => 'Category',
+            'categoryName' => 'Category',
+            'statusText' => 'Status',
         ];
     }
 
@@ -70,10 +78,36 @@ class News extends \yii\db\ActiveRecord
     public function upload()
     {
         if ($this->validate()) {
-            $this->imageFile->saveAs('uploads/news/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            $this->image = 'uploads/news/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $this->imageFile->saveAs(Yii::getAlias('@webroot').'/'.$this->image);
+            $this->imageFile = NULL;
             return true;
         } else {
             return false;
         }
+    }
+
+    public function getStatusText()
+    {
+        if($this->status) {
+            return 'ACTIVE';
+        }
+        else {
+            return 'INACTIVE';
+        }
+    }
+
+    public function setStatusText($statusText)
+    {
+        if($statusText === 'ACTIVE') {
+            $this->status = 1;
+        } else {
+            $this->status = 0;
+        }
+    }
+
+    public function getCategoryName()
+    {
+        return $this->category->caption;
     }
 }
