@@ -1,57 +1,36 @@
 <?php
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
-
+<div class="site-index container">
     <div class="row">
-        <div class=".col-md-3">
-            <h2>Категории</h2>
-            <ul>
-                <?php foreach ($categories as $category): ?>
-                    <li>
-                        <?= $category->caption ?>:
-                        <?= $category->description ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+        <div class="col-md-3">
+            <nav>
+                <ul class="nav nav-pills nav-stacked" role="complementary">
+                    <?php foreach ($categories as $category): ?>
+                        <li>
+                            <a href=""><?= $category->caption ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
         </div>
 
-        <div class=".col-md-9">
-
-            <div class="row">
-                <div class="col-lg-4">
-                    <h2>Heading</h2>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur.</p>
-
-                    <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-                </div>
-                <div class="col-lg-4">
-                    <h2>Heading</h2>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur.</p>
-
-                    <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-                </div>
-                <div class="col-lg-4">
-                    <h2>Heading</h2>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur.</p>
-
-                    <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-                </div>
-            </div>
-
+        <div class="col-md-9" role="main">
+            <?php foreach($news as $item): ?>
+                <h2><a href="<?= Url::toRoute(['news/view', 'id' => $item->id]) ?>"><?= $item->headline ?></a></h2>
+                <?php if(!empty($item->image)): ?>
+                    <img src="<?= $item->image ?>">
+                <?php endif; ?>
+                <p><?= $item->description ?></p>
+                <p>
+                    <small>
+                        <?= $item->date ?>
+                    </small>
+                </p>
+                <p><a class="btn btn-default" href="<?= Url::toRoute(['news/view', 'id' => $item->id]) ?>">Подробнее &raquo;</a></p>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

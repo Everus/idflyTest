@@ -59,18 +59,15 @@ class SiteController extends Controller
 
         $query = News::find()->where(['status' => News::STATUS_ACTIVE]);
         $count = $query->count();
-        if( $count > 0) {
-            $pagination = New Pagination( [['totalCount'] => $count] );
 
-            $news = $query->offset($pagination->offset)
-                ->orderBy('date')
-                ->limit($pagination->limit)
-                ->all();
+        $pagination = New Pagination( ['totalCount' => $count] );
 
-            return $this->render('index',['news' => $news]);
-        }
+        $news = $query->offset($pagination->offset)
+            ->orderBy('date')
+            ->limit($pagination->limit)
+            ->all();
 
-        return $this->render('index', ['categories' => $categories]);
+        return $this->render('index', ['categories' => $categories, 'news' => $news]);
     }
 
     public function actionLogin()

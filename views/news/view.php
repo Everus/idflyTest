@@ -1,42 +1,32 @@
 <?php
-
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-
 /* @var $this yii\web\View */
-/* @var $model app\models\News */
-
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'News', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = $post->headline;
 ?>
-<div class="news-view">
+<div class="site-index container">
+    <div class="row">
+        <div class="col-md-3">
+            <nav>
+                <ul class="nav nav-pills nav-stacked" role="complementary">
+                    <?php foreach ($categories as $category): ?>
+                        <li>
+                            <a href=""><?= $category->caption ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
+        </div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'headline:ntext',
-            'description:ntext',
-            'date',
-            'content:ntext',
-            'image:ntext',
-            'status',
-            'category_id',
-        ],
-    ]) ?>
-
+        <div class="col-md-9" role="main">
+            <h2><?= $post->headline ?></h2>
+            <?php if(!empty($post->image)): ?>
+                <img src="<?= $post->image ?>">
+            <?php endif; ?>
+            <p><?= $post->content ?></p>
+            <p>
+                <small>
+                    <?= $post->date ?>
+                </small>
+            </p>
+        </div>
+    </div>
 </div>
